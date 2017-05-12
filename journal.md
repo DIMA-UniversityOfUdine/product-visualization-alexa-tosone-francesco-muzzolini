@@ -1,0 +1,1 @@
+Log dei progressi effettuati
