@@ -62,7 +62,7 @@
 			varying vec3 vNormal;
 			varying vec3 vPosition;
 			varying vec2 uVv;
-			uniform vec3 AmbientLightPosition; // in world space
+			uniform vec3 pointLightPosition; // in world space
 			uniform vec3 clight;
 			uniform vec3 cspec;
 			uniform vec3 cdiff;
@@ -111,7 +111,7 @@
 		}
 
 			void main() {
-				vec4 lPosition = viewMatrix * vec4( AmbientLightPosition, 1.0 );
+				vec4 lPosition = viewMatrix * vec4( pointLightPosition, 1.0 );
 				vec3 l = normalize(lPosition.xyz - vPosition.xyz);
 				vec3 n = perturbNormal2Arb( vPosition, normalize( vNormal ));
 				vec3 v = normalize( -vPosition);
@@ -149,19 +149,19 @@
 			}
 
 			var textureParameters = {
-				normalScale: 0.0,
+				normalScale: 0.2,
 			}
 			
 			
 			var normalMap = loadTexture( "textures/normal.jpg" );
 
 			var uniforms = {
-				    cspec:	{ type: "v3", value: new THREE.Vector3(0.04,0.04,0.04) },
-				    cdiff:	{ type: "v3", value: new THREE.Vector3(0.7,0,0) },
-				    roughness: {type: "f", value: 0.2},
+				    cspec:	{ type: "v3", value: new THREE.Vector3(0.01,0.01,0.01) },
+				    cdiff:	{ type: "v3", value: new THREE.Vector3(0,0,0) },
+				    roughness: {type: "f", value: 0.3},
 					  normalMap:	{ type: "t", value: normalMap},
 						normalScale: {type: "v2", value: new THREE.Vector2(1,1)},
-						AmbientLightPosition:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition:	{ type: "v3", value: new THREE.Vector3() },
 						clight:	{ type: "v3", value: new THREE.Vector3() },
 					};
 
@@ -183,7 +183,7 @@
 			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16),
 			new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:true}));
 			lightMesh.position.set( 0.0, 23.0, 0.0 );
-			uniforms.AmbientLightPosition.value = new THREE.Vector3(lightMesh.position.x,	lightMesh.position.y, lightMesh.position.z);
+			uniforms.pointLightPosition.value = new THREE.Vector3(lightMesh.position.x,	lightMesh.position.y, lightMesh.position.z);
 			
 
 			var gui;
@@ -264,10 +264,10 @@
 			scene.add(right, left, floor, top, front, back);
 			//fine stanza
 				
-			var amblight = new THREE.AmbientLight( 0xffffff ); // soft white light
+			var amblight = new THREE.AmbientLight( 0xffffff ); 
                 scene.add( amblight );
 			
-			}
+			} //fine init
 
 			function onResize() {
 
