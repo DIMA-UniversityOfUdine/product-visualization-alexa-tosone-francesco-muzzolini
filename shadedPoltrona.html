@@ -41,6 +41,7 @@
 		<script src="lib/OrbitControls.js"></script>
 		<script src='lib/dat.gui.min.js'></script>
 		<script src='lib/OBJLoader.js'></script>
+		<script src="lib/Coordinates.js"></script>
 
 		<!-- shaders -->
 
@@ -63,6 +64,8 @@
 			varying vec3 vPosition;
 			varying vec2 uVv;
 			uniform vec3 pointLightPosition; // in world space
+			uniform vec3 pointLightPosition2;
+			uniform vec3 pointLightPosition3;
 			uniform vec3 clight;
 			uniform vec3 cspec;
 			uniform vec3 cdiff;
@@ -112,22 +115,52 @@
 
 			void main() {
 				vec4 lPosition = viewMatrix * vec4( pointLightPosition, 1.0 );
+				vec4 lPosition2 = viewMatrix * vec4( pointLightPosition2, 1.0 );
+				vec4 lPosition3 = viewMatrix * vec4( pointLightPosition3, 1.0 );
 				vec3 l = normalize(lPosition.xyz - vPosition.xyz);
+				vec3 l2 = normalize(lPosition2.xyz - vPosition.xyz);
+				vec3 l3 = normalize(lPosition3.xyz - vPosition.xyz);
 				vec3 n = perturbNormal2Arb( vPosition, normalize( vNormal ));
 				vec3 v = normalize( -vPosition);
 				vec3 h = normalize( v + l);
+				vec3 h2 = normalize( v + l2);
+				vec3 h3 = normalize( v + l3);
 				// small quantity to prevent divisions by 0
 				float nDotl = max(dot( n, l ),0.000001);
 				float lDoth = max(dot( l, h ),0.000001);
 				float nDoth = max(dot( n, h ),0.000001);
 				float vDoth = max(dot( v, h ),0.000001);
 				float nDotv = max(dot( n, v ),0.000001);
+				
+				float nDotl2 = max(dot( n, l2 ),0.000001);
+				float lDoth2 = max(dot( l2, h2 ),0.000001);
+				float nDoth2 = max(dot( n, h2 ),0.000001);
+				float vDoth2 = max(dot( v, h2 ),0.000001);
+
+				float nDotl3 = max(dot( n, l3 ),0.000001);
+				float lDoth3 = max(dot( l3, h3 ),0.000001);
+				float nDoth3 = max(dot( n, h3 ),0.000001);
+				float vDoth3 = max(dot( v, h3 ),0.000001);
+				
 				vec3 fresnel = FSchlick(lDoth);
 				vec3 BRDF = (vec3(1.0)-fresnel)*cdiff/PI + fresnel*GSmith(nDotv,nDotl)*DGGX(nDoth,roughness*roughness)/
 					(4.0*nDotl*nDotv);
-				vec3 outRadiance = PI* clight * nDotl * BRDF;
+				vec3 outRadiance1 = PI* clight * nDotl * BRDF;
+				
+				vec3 fresnel2 = FSchlick(lDoth2);
+				vec3 BRDF2 = (vec3(1.0)-fresnel2)*cdiff/PI + fresnel2*GSmith(nDotv,nDotl2)*DGGX(nDoth2,roughness*roughness)/
+					(4.0*nDotl2*nDotv);
+				vec3 outRadiance2 = PI* clight * nDotl2 * BRDF2;
+				
+				vec3 fresnel3 = FSchlick(lDoth3);
+				vec3 BRDF3 = (vec3(1.0)-fresnel3)*cdiff/PI + fresnel3*GSmith(nDotv,nDotl3)*DGGX(nDoth3,roughness*roughness)/
+					(4.0*nDotl3*nDotv);
+				vec3 outRadiance3 = PI* clight * nDotl3 * BRDF3;
+				
+				vec3 outRadiance = outRadiance1+outRadiance2+outRadiance3;
 				// gamma encode the final value
 				gl_FragColor = vec4(pow( outRadiance, vec3(1.0/2.2)), 1.0);
+				
 			}
 		</script>
 
@@ -145,7 +178,7 @@
 				red: 1.0,
 				green: 1.0,
 				blue: 1.0,
-				intensity: 1.0,
+				intensity: 5.0,
 			}
 
 			var textureParameters = {
@@ -162,6 +195,8 @@
 					  normalMap:	{ type: "t", value: normalMap},
 						normalScale: {type: "v2", value: new THREE.Vector2(1,1)},
 						pointLightPosition:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition2:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition3:	{ type: "v3", value: new THREE.Vector3() },
 						clight:	{ type: "v3", value: new THREE.Vector3() },
 					};
 
@@ -180,10 +215,17 @@
 				} );
 
 			
-			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16),
-			new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:true}));
-			lightMesh.position.set( 0.0, 23.0, 0.0 );
+			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16), new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:true}));
+			lightMesh.position.set( 0.0, 15.0, 0.0 );
 			uniforms.pointLightPosition.value = new THREE.Vector3(lightMesh.position.x,	lightMesh.position.y, lightMesh.position.z);
+			
+			var light2 = new THREE.Mesh (new THREE.SphereGeometry( 1, 16, 16), new THREE.MeshBasicMaterial ({color: 0xff0000, wireframe:true}));
+			light2.position.set (0.0, 10.0, 10.0);
+			uniforms.pointLightPosition2.value = new THREE.Vector3(light2.position.x,	light2.position.y, light2.position.z);
+			
+			var light3 = new THREE.Mesh (new THREE.SphereGeometry( 1, 16, 16), new THREE.MeshBasicMaterial ({color: 0x0000ff, wireframe:true}));
+			light3.position.set (0.0, 10.0, -10.0);
+			uniforms.pointLightPosition3.value = new THREE.Vector3(light3.position.x,	light3.position.y, light3.position.z);
 			
 
 			var gui;
@@ -211,7 +253,7 @@
 				camera.position.set(20,13,0);
 				camera.lookAt( new THREE.Vector3(0,0,0));
 				scene.add( camera );
-				scene.add(lightMesh);
+				scene.add(lightMesh, light2, light3);
 
 				document.body.appendChild( renderer.domElement );
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -222,6 +264,9 @@
 				controls.maxDistance = 100;
 				controls.enablePan = false;
 				controls.update();
+				
+				//disegna assi
+				Coordinates.drawAllAxes();
 
 				window.addEventListener( 'resize', onResize, false );
 
@@ -264,8 +309,18 @@
 			scene.add(right, left, floor, top, front, back);
 			//fine stanza
 				
-			var amblight = new THREE.AmbientLight( 0xffffff ); 
+			var amblight = new THREE.AmbientLight( 0x808080 ); 
                 scene.add( amblight );
+			
+			var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );  // (color, intensity)
+				directionalLight.position.set( -15, -15, -15 );
+				directionalLight.target.position.set( +15, +15, +15 );
+				scene.add( directionalLight );
+				
+			var directionalLight2 = new THREE.DirectionalLight( 0xffffff, 0.55 );  // (color, intensity)
+				directionalLight2.position.set( +15, 0, +15 );
+				directionalLight2.target.position.set( -15, 0, -15 );
+				scene.add( directionalLight2 );
 			
 			} //fine init
 
