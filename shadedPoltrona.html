@@ -206,7 +206,7 @@
 			var ourMaterial = new THREE.ShaderMaterial({ uniforms: uniforms, vertexShader: vs, fragmentShader: fs });
 
 			var loader = new THREE.OBJLoader();
-				loader.load( "poltrona/armchair.obj", function ( group ) {
+				loader.load( "poltrona/modelli/armchair.obj", function ( group ) {
 					geometry = group.children[ 0 ].geometry;
 					geometry.center();
 					mesh = new THREE.Mesh( geometry, ourMaterial );
