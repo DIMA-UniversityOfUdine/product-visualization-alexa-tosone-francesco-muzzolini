@@ -215,18 +215,20 @@
 				} );
 			
 			
-			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 1, 16, 16), new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:true}));
+			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 0.01, 16, 16), new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:true}));
 			lightMesh.position.set( 0.0, 15.0, 0.0 );
 			uniforms.pointLightPosition.value = new THREE.Vector3(lightMesh.position.x,	lightMesh.position.y, lightMesh.position.z);
 			
-			var light2 = new THREE.Mesh (new THREE.SphereGeometry( 1, 16, 16), new THREE.MeshBasicMaterial ({color: 0xff0000, wireframe:true}));
+			var light2 = new THREE.Mesh (new THREE.SphereGeometry( 0.01, 16, 16), new THREE.MeshBasicMaterial ({color: 0xff0000, wireframe:true}));
 			light2.position.set (0.0, 10.0, 10.0);
 			uniforms.pointLightPosition2.value = new THREE.Vector3(light2.position.x,	light2.position.y, light2.position.z);
 			
-			var light3 = new THREE.Mesh (new THREE.SphereGeometry( 1, 16, 16), new THREE.MeshBasicMaterial ({color: 0x0000ff, wireframe:true}));
+			var light3 = new THREE.Mesh (new THREE.SphereGeometry( 0.01, 16, 16), new THREE.MeshBasicMaterial ({color: 0x0000ff, wireframe:true}));
 			light3.position.set (0.0, 10.0, -10.0);
 			uniforms.pointLightPosition3.value = new THREE.Vector3(light3.position.x,	light3.position.y, light3.position.z);
-						
+			
+			
+			
 			var gui;
 			var stats = new Stats();
 
@@ -319,9 +321,58 @@
 				
 				//fine lampada sinistra
 							
+				//inizio lampada destra
+				var lampadinaDX = lampadina.clone();
+				var lampGDX = lampG.clone();
+				var sostegnoDX = sostegno.clone();
+				var piedeDX = piede.clone();
+				
+				lampadinaDX.position.set(0, 10, -10);
+				lampadinaDX.rotation.y = -120 * Math.PI/180;
+				
+				scene.add(lampadinaDX);
+				lampadinaDX.add(lampGDX);
+				lampadinaDX.add(sostegnoDX);
+				lampadinaDX.add(piedeDX);
+				
+				//fine lampada destra
 
-
-
+				//inizio lampada soffitto
+				//var lampadinaSU = lampadina.clone();
+				//var lampGSU = lampG.clone();
+				//var sostegnoSU = sostegno.clone();
+				//var piedeSU = piede.clone();
+				
+				var geometryASU = new THREE.SphereGeometry( 1.5, 60, 60, Math.PI, Math.PI/1.4, Math.PI);  //( 50, 60, 60, Math.PI, Math.PI, 3*Math.PI/2);
+				var materialASU = new THREE.MeshBasicMaterial( { color: 0x050505 } );
+				lampGSU = new THREE.Mesh( geometryASU, materialLamp );
+				lampGSU.material.side = THREE.DoubleSide; //oppure THREE.BackSide DoubleSide
+				//lampG.rotation.x = -40 * Math.PI/180;
+				lampGSU.position.set(0.5, 0, -1);
+				//scene.add( lampG );
+				
+				//lampadina
+				var geometryBSU = new THREE.SphereGeometry( 0.3, 60, 60, Math.PI, Math.PI*2, Math.PI);
+				var materialBSU = new THREE.MeshBasicMaterial( { color: 0xdddd00 } );
+				lampadinaSU = new THREE.Mesh( geometryBSU, materialB );
+				lampadinaSU.material.side = THREE.DoubleSide;
+				lampadinaSU.position.set(0, 15, 0);
+				lampadinaSU.rotation.z = Math.PI;
+				lampadinaSU.rotation.x = -90 * Math.PI/180;
+				lampadinaSU.rotation.z =  Math.PI/180;
+							
+				var geometryCSU = new THREE.CylinderGeometry(0.02, 0.02, 19, 60, 1, false, 0, Math.PI*2); //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
+				var materialCSU = new THREE.MeshBasicMaterial( { color: 0xf0f0f0 } );
+				sostegnoCSU = new THREE.Mesh( geometryCSU, materialLamp );
+				sostegnoCSU.position.set(0, 24.5, 0);
+				//sostegnoSU.rotation.x = -90 * Math.PI/180;
+				
+				scene.add(lampadinaSU);
+				lampadinaSU.add(lampGSU);
+				scene.add(sostegnoCSU);
+				//lampadinaSU.add(piedeSU);
+				
+				//fine lampada soffitto
 
 							
 				//inizio stanza
