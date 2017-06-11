@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js webgl - normal mapping</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body {
+				background-color: #f0f0f0;
+				margin: 0px;
+				overflow: hidden;
+			}
+
+			#info {
+				position: absolute;
+				top: 0px; width: 100%;
+				color: #222;
+				padding: 5px;
+				font-family: Monospace;
+				font-size: 13px;
+				text-align: center;
+			}
+
+			a {
+				color: #000;
+				text-decoration: none;
+			}
+
+			a:hover {
+				color: #0080ff;
+			}
+		</style>
+	</head>
+	<body>
+
+		<div id="info">
+			<a href="https://github.com/robertoranon/int3D" target="_blank">Interactive 3D Graphics 2017 code</a> - normal mapping<br />
+		</div>
+		<script src="lib/three.min.js"></script>
+		<script src="lib/stats.min.js"></script>
+		<script src="lib/OrbitControls.js"></script>
+		<script src='lib/dat.gui.min.js'></script>
+		<script src='lib/OBJLoader.js'></script>
+		<script src="lib/Coordinates.js"></script>
+
+		<!-- shaders -->
+
+		<script type="text/x-glsl" id="vertex">
+		varying vec3 vNormal;
+		varying vec3 vPosition;
+		varying vec2 uVv;
+
+		void main() {
+			vec4 vPos = modelViewMatrix * vec4( position, 1.0 );
+			vPosition = vPos.xyz;
+			vNormal = normalMatrix * normal;
+			uVv = uv;
+			gl_Position = projectionMatrix * vPos;
+		}
+		</script>
+
+		<script type="text/x-glsl" id="fragment">
+			varying vec3 vNormal;
+			varying vec3 vPosition;
+			varying vec2 uVv;
+			uniform vec3 pointLightPosition; // in world space
+			uniform vec3 pointLightPosition2;
+			uniform vec3 pointLightPosition3;
+			uniform vec3 clight;
+			uniform vec3 cspec;
+			uniform vec3 cdiff;
+			uniform float roughness;
+			uniform sampler2D normalMap;
+			uniform vec2 normalScale;
+			const float PI = 3.14159;
+
+			vec3 FSchlick(float lDoth) {
+				return (cspec + (vec3(1.0)-cspec)*pow(1.0 - lDoth,5.0));
+			}
+
+			float DGGX(float nDoth, float alpha) {
+				float alpha2 = alpha*alpha;
+				float d = nDoth*nDoth*(alpha2-1.0)+1.0;
+				return (  alpha2 / (PI*d*d));
+			}
+
+			float G1(float dotProduct, float k) {
+				return (dotProduct / (dotProduct*(1.0-k) + k) );
+			}
+
+			float GSmith(float nDotv, float nDotl) {
+					float k = roughness*roughness;
+					return G1(nDotl,k)*G1(nDotv,k);
+			}
+
+			#extension GL_OES_standard_derivatives : enable
+
+		vec3 perturbNormal2Arb( vec3 eye_pos, vec3 surf_norm ) {
+
+			vec3 q0 = dFdx( eye_pos.xyz );
+			vec3 q1 = dFdy( eye_pos.xyz );
+			vec2 st0 = dFdx( uVv.st );
+			vec2 st1 = dFdy( uVv.st );
+
+			vec3 S = normalize(  q0 * st1.t - q1 * st0.t );
+			vec3 T = normalize( -q0 * st1.s + q1 * st0.s );
+			vec3 N =  surf_norm ;
+
+			vec3 mapN = normalize(texture2D( normalMap, uVv ).xyz * 2.0 - 1.0);
+			mapN.xy = normalScale * mapN.xy;
+			mat3 tsn = mat3( S, T, N );
+			return normalize( tsn * mapN );
+
+		}
+
+			void main() {
+				vec4 lPosition = viewMatrix * vec4( pointLightPosition, 1.0 );
+				vec4 lPosition2 = viewMatrix * vec4( pointLightPosition2, 1.0 );
+				vec4 lPosition3 = viewMatrix * vec4( pointLightPosition3, 1.0 );
+				vec3 l = normalize(lPosition.xyz - vPosition.xyz);
+				vec3 l2 = normalize(lPosition2.xyz - vPosition.xyz);
+				vec3 l3 = normalize(lPosition3.xyz - vPosition.xyz);
+				vec3 n = perturbNormal2Arb( vPosition, normalize( vNormal ));
+				vec3 v = normalize( -vPosition);
+				vec3 h = normalize( v + l);
+				vec3 h2 = normalize( v + l2);
+				vec3 h3 = normalize( v + l3);
+				// small quantity to prevent divisions by 0
+				float nDotl = max(dot( n, l ),0.000001);
+				float lDoth = max(dot( l, h ),0.000001);
+				float nDoth = max(dot( n, h ),0.000001);
+				float vDoth = max(dot( v, h ),0.000001);
+				float nDotv = max(dot( n, v ),0.000001);
+				
+				float nDotl2 = max(dot( n, l2 ),0.000001);
+				float lDoth2 = max(dot( l2, h2 ),0.000001);
+				float nDoth2 = max(dot( n, h2 ),0.000001);
+				float vDoth2 = max(dot( v, h2 ),0.000001);
+
+				float nDotl3 = max(dot( n, l3 ),0.000001);
+				float lDoth3 = max(dot( l3, h3 ),0.000001);
+				float nDoth3 = max(dot( n, h3 ),0.000001);
+				float vDoth3 = max(dot( v, h3 ),0.000001);
+				
+				vec3 fresnel = FSchlick(lDoth);
+				vec3 BRDF = (vec3(1.0)-fresnel)*cdiff/PI + fresnel*GSmith(nDotv,nDotl)*DGGX(nDoth,roughness*roughness)/
+					(4.0*nDotl*nDotv);
+				vec3 outRadiance1 = PI* clight * nDotl * BRDF;
+				
+				vec3 fresnel2 = FSchlick(lDoth2);
+				vec3 BRDF2 = (vec3(1.0)-fresnel2)*cdiff/PI + fresnel2*GSmith(nDotv,nDotl2)*DGGX(nDoth2,roughness*roughness)/
+					(4.0*nDotl2*nDotv);
+				vec3 outRadiance2 = PI* clight * nDotl2 * BRDF2;
+				
+				vec3 fresnel3 = FSchlick(lDoth3);
+				vec3 BRDF3 = (vec3(1.0)-fresnel3)*cdiff/PI + fresnel3*GSmith(nDotv,nDotl3)*DGGX(nDoth3,roughness*roughness)/
+					(4.0*nDotl3*nDotv);
+				vec3 outRadiance3 = PI* clight * nDotl3 * BRDF3;
+				
+				vec3 outRadiance = outRadiance1+outRadiance2+outRadiance3;
+				// gamma encode the final value
+				gl_FragColor = vec4(pow( outRadiance, vec3(1.0/2.2)), 1.0);
+				
+			}
+		</script>
+
+		<!-- three.js code -->
+
+		<script>
+
+			var renderer = new THREE.WebGLRenderer( { antialias: true } );
+			var camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 1000 );
+			var controls = new THREE.OrbitControls( camera, renderer.domElement );
+			var scene = new THREE.Scene();
+
+			// default: white, 1.0 intensity
+			var lightParameters = {
+				red: 1.0,
+				green: 1.0,
+				blue: 1.0,
+				intensity: 5.0,
+			}
+
+			var textureParameters = {
+				normalScale: 0.2,
+				RedColor: 0.011,
+				GreenColor: 0,
+				BlueColor: 0,	
+			}
+			
+			
+			var normalMap = loadTexture( "textures/normal.jpg" );
+
+			var uniforms = {
+				    cspec:	{ type: "v3", value: new THREE.Vector3(0.001,0.001,0.001) },
+				    cdiff:	{ type: "v3", value: new THREE.Vector3(0,0,0) },
+				    roughness: {type: "f", value: 0.32},
+					  normalMap:	{ type: "t", value: normalMap},
+						normalScale: {type: "v2", value: new THREE.Vector2(1,1)},
+						pointLightPosition:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition2:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition3:	{ type: "v3", value: new THREE.Vector3() },
+						clight:	{ type: "v3", value: new THREE.Vector3() },
+					};
+
+			vs = document.getElementById("vertex").textContent;
+			fs = document.getElementById("fragment").textContent;
+
+			var ourMaterial = new THREE.ShaderMaterial({ uniforms: uniforms, vertexShader: vs, fragmentShader: fs });
+
+			var loader = new THREE.OBJLoader();
+				loader.load( "modelli/armchair.obj", function ( group ) {
+					geometry = group.children[ 0 ].geometry;
+					geometry.center();
+					mesh = new THREE.Mesh( geometry, ourMaterial );
+					mesh.scale.multiplyScalar( 0.1 );
+					scene.add( mesh );
+				} );
+			
+			
+			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 0.01, 16, 16), new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:true}));
+			lightMesh.position.set( 0.0, 15.0, 0.0 );
+			uniforms.pointLightPosition.value = new THREE.Vector3(lightMesh.position.x,	lightMesh.position.y, lightMesh.position.z);
+			
+			var light2 = new THREE.Mesh (new THREE.SphereGeometry( 0.01, 16, 16), new THREE.MeshBasicMaterial ({color: 0xff0000, wireframe:true}));
+			light2.position.set (0.0, 10.0, 10.0);
+			uniforms.pointLightPosition2.value = new THREE.Vector3(light2.position.x,	light2.position.y, light2.position.z);
+			
+			var light3 = new THREE.Mesh (new THREE.SphereGeometry( 0.01, 16, 16), new THREE.MeshBasicMaterial ({color: 0x0000ff, wireframe:true}));
+			light3.position.set (0.0, 10.0, -10.0);
+			uniforms.pointLightPosition3.value = new THREE.Vector3(light3.position.x,	light3.position.y, light3.position.z);
+			
+			
+			
+			var gui;
+			var stats = new Stats();
+
+			function loadTexture(file) {
+					var texture = new THREE.TextureLoader().load( file , function ( texture ) {
+
+						texture.minFilter = THREE.LinearMipMapLinearFilter;
+						texture.anisotropy = renderer.getMaxAnisotropy();
+						texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+						texture.offset.set( 0, 0 );
+						texture.needsUpdate = true;
+						render();
+					} )
+					return texture;
+			}
+
+			
+			
+			function init() {
+
+				renderer.setClearColor( 0xf0f0f0 );
+
+				camera.position.set(20,13,0);
+				camera.lookAt( new THREE.Vector3(0,0,0));
+				scene.add( camera );
+				scene.add(lightMesh, light2, light3);
+
+				document.body.appendChild( renderer.domElement );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+
+				//controls.addEventListener( 'change', render );
+				controls.minDistance = 12;
+				controls.maxDistance = 45;
+				controls.enablePan = false;
+				controls.update();
+				
+				//disegna assi
+				Coordinates.drawAllAxes();
+
+				window.addEventListener( 'resize', onResize, false );
+
+				stats.domElement.style.position = 'absolute';
+				stats.domElement.style.top = '0px';
+				document.body.appendChild( stats.domElement );
+
+				ourMaterial.needsUpdate = true;
+
+						
+				//inizio creazione lampada sinistra
+				var textureLamp = THREE.ImageUtils.loadTexture('textures/whitelamp.jpg');
+				var materialLamp = new THREE.MeshPhongMaterial( { map: textureLamp } );
+				
+				//nota : SphereGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength)
+				var geometryA = new THREE.SphereGeometry( 1.5, 60, 60, Math.PI, Math.PI/1.4, Math.PI);  //( 50, 60, 60, Math.PI, Math.PI, 3*Math.PI/2);
+				var materialA = new THREE.MeshBasicMaterial( { color: 0x050505 } );
+				lampG = new THREE.Mesh( geometryA, materialLamp );
+				lampG.material.side = THREE.DoubleSide; //oppure THREE.BackSide DoubleSide
+				//lampG.rotation.x = -40 * Math.PI/180;
+				lampG.position.set(0.5, 0, -1);
+				//scene.add( lampG );
+				
+				//lampadina
+				var geometryB = new THREE.SphereGeometry( 0.3, 60, 60, Math.PI, Math.PI*2, Math.PI);
+				var materialB = new THREE.MeshBasicMaterial( { color: 0xdddd00 } );
+				lampadina = new THREE.Mesh( geometryB, materialB );
+				lampadina.material.side = THREE.DoubleSide;
+				lampadina.position.set(0, 10, 10);
+				//scene.add(lampadina);
+				
+				//sostegno
+				
+				var geometryC = new THREE.CylinderGeometry(0.05, 0.05, 13, 60, 1, false, 0, Math.PI*2); //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
+				var materialC = new THREE.MeshBasicMaterial( { color: 0xf0f0f0 } );
+				sostegno = new THREE.Mesh( geometryC, materialLamp );
+				sostegno.position.set(0, -6.7, 0);
+				//scene.add(sostegno);
+				
+				//piede
+				var geometryD = new THREE.CylinderGeometry(0.8, 0.8, 0.05, 60, 1, false, 0, Math.PI*2);//THREE.BoxGeometry(25, 1, 25);
+				var materialD = new THREE.MeshBasicMaterial( { color: 0xf0f0f0 } );
+				piede = new THREE.Mesh( geometryD, materialLamp );
+				piede.position.set(0, -13, 0);
+				//scene.add(piede);
+				
+				scene.add(lampadina);
+				lampadina.add(lampG);
+				lampadina.add(sostegno);
+				lampadina.add(piede);
+				
+				//fine lampada sinistra
+							
+				//inizio lampada destra
+				var lampadinaDX = lampadina.clone();
+				var lampGDX = lampG.clone();
+				var sostegnoDX = sostegno.clone();
+				var piedeDX = piede.clone();
+				
+				lampadinaDX.position.set(0, 10, -10);
+				lampadinaDX.rotation.y = -120 * Math.PI/180;
+				
+				scene.add(lampadinaDX);
+				lampadinaDX.add(lampGDX);
+				lampadinaDX.add(sostegnoDX);
+				lampadinaDX.add(piedeDX);
+				
+				//fine lampada destra
+
+				//inizio lampada soffitto
+				//var lampadinaSU = lampadina.clone();
+				//var lampGSU = lampG.clone();
+				//var sostegnoSU = sostegno.clone();
+				//var piedeSU = piede.clone();
+				
+				var geometryASU = new THREE.SphereGeometry( 1.5, 60, 60, Math.PI, Math.PI/1.4, Math.PI);  //( 50, 60, 60, Math.PI, Math.PI, 3*Math.PI/2);
+				var materialASU = new THREE.MeshBasicMaterial( { color: 0x050505 } );
+				lampGSU = new THREE.Mesh( geometryASU, materialLamp );
+				lampGSU.material.side = THREE.DoubleSide; //oppure THREE.BackSide DoubleSide
+				//lampG.rotation.x = -40 * Math.PI/180;
+				lampGSU.position.set(0.5, 0, -1);
+				//scene.add( lampG );
+				
+				//lampadina
+				var geometryBSU = new THREE.SphereGeometry( 0.3, 60, 60, Math.PI, Math.PI*2, Math.PI);
+				var materialBSU = new THREE.MeshBasicMaterial( { color: 0xdddd00 } );
+				lampadinaSU = new THREE.Mesh( geometryBSU, materialB );
+				lampadinaSU.material.side = THREE.DoubleSide;
+				lampadinaSU.position.set(0, 15, 0);
+				lampadinaSU.rotation.z = Math.PI;
+				lampadinaSU.rotation.x = -90 * Math.PI/180;
+				lampadinaSU.rotation.z =  Math.PI/180;
+							
+				var geometryCSU = new THREE.CylinderGeometry(0.02, 0.02, 19, 60, 1, false, 0, Math.PI*2); //CylinderGeometry(radiusTop, radiusBottom, height, radiusSegments, heightSegments, openEnded, thetaStart, thetaLength)
+				var materialCSU = new THREE.MeshBasicMaterial( { color: 0xf0f0f0 } );
+				sostegnoCSU = new THREE.Mesh( geometryCSU, materialLamp );
+				sostegnoCSU.position.set(0, 24.5, 0);
+				//sostegnoSU.rotation.x = -90 * Math.PI/180;
+				
+				scene.add(lampadinaSU);
+				lampadinaSU.add(lampGSU);
+				scene.add(sostegnoCSU);
+				//lampadinaSU.add(piedeSU);
+				
+				//fine lampada soffitto
+
+							
+				//inizio stanza
+			var geometryP = new THREE.PlaneGeometry(20,20);
+			var textureP = THREE.ImageUtils.loadTexture('textures/concreteWall.jpg');
+			var textureFloor = THREE.ImageUtils.loadTexture('textures/wall.jpg');
+			var materialP = new THREE.MeshPhongMaterial( { map: textureP } );
+			var materialFloor = new THREE.MeshPhongMaterial( { map: textureFloor } );
+			var right = new THREE.Mesh( geometryP, materialP );
+			right.position.set(0, 12,-25); 
+			right.scale.set(2.5, 1.5, 1); 
+			var left = new THREE.Mesh( geometryP, materialP );
+			left.rotation.y = 180 * Math.PI/180;
+			left.position.set(0,12,25); 
+			left.scale.set(2.5, 1.5, 1);
+			var floor = new THREE.Mesh( geometryP, materialFloor );
+			floor.rotation.x = -90 * Math.PI/180;
+			floor.position.set(0, -3,0); 
+			floor.scale.set(2.5, 2.5, 1); 
+			var top = new THREE.Mesh( geometryP, materialP );
+			top.rotation.x = 90 * Math.PI/180;
+			top.position.set(0, 27,0); 
+			top.scale.set(2.5, 2.5, 1);
+			var front = new THREE.Mesh( geometryP, materialP );
+			front.rotation.y = -90 * Math.PI/180;
+			front.position.set(25,12,0); 
+			front.scale.set(2.5, 1.5, 1);
+			var back = new THREE.Mesh( geometryP, materialP );
+			back.rotation.y = 90 * Math.PI/180;
+			back.position.set(-25,12,0);
+			back.scale.set(2.5, 1.5, 1);
+			
+			scene.add(right, left, floor, top, front, back);
+			//fine stanza
+				
+			var amblight = new THREE.AmbientLight( 0x808080 ); 
+                scene.add( amblight );
+			
+			var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );  // (color, intensity)
+				directionalLight.position.set( -15, -15, -15 );
+				directionalLight.target.position.set( +15, +15, +15 );
+				scene.add( directionalLight );
+				
+			var directionalLight2 = new THREE.DirectionalLight( 0xffffff, 0.55 );  // (color, intensity)
+				directionalLight2.position.set( +15, 0, +15 );
+				directionalLight2.target.position.set( -15, 0, -15 );
+				scene.add( directionalLight2 );
+			
+			} //fine init
+
+			function onResize() {
+
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				camera.aspect = ( window.innerWidth / window.innerHeight );
+				camera.updateProjectionMatrix();
+
+			}
+
+			function update() {
+				requestAnimationFrame( update );
+				stats.update();
+				render();
+			}
+
+			function render() {
+				updateUniforms();
+				renderer.render( scene, camera );
+
+			}
+			
+			function clearGui() {
+
+				if ( gui ) gui.destroy();
+				gui = new dat.GUI();
+				gui.open();
+
+			}
+			
+			
+
+			function buildGui() {
+
+				clearGui();
+				lightSettings = gui.addFolder('Light Parameters');
+				lightSettings.add(lightParameters,'red').min(0).max(1).onChange( function(newVal) { render() });
+				lightSettings.add(lightParameters,'green').min(0).max(1).onChange( function(newVal) { render() });
+				lightSettings.add(lightParameters,'blue').min(0).max(1).onChange( function(newVal) { render() });
+				lightSettings.add(lightParameters,'intensity').min(0).max(10000).onChange( function(newVal) { render() });
+
+				textureSettings = gui.addFolder('Texture parameters');
+				textureSettings.add(textureParameters,'normalScale').min(-3).max(3).onChange( function( newVal ) {render()});
+				textureSettings.add(textureParameters,'RedColor').min(0).max(0.06).onChange( function( newVal ) {render()});
+				textureSettings.add(textureParameters,'GreenColor').min(0).max(0.06).onChange( function( newVal ) {render()});
+				textureSettings.add(textureParameters,'BlueColor').min(0).max(0.06).onChange( function( newVal ) {render()});
+				
+				}
+
+			function updateUniforms() {
+
+					uniforms.clight.value = new THREE.Vector3(
+									lightParameters.red * lightParameters.intensity,
+									lightParameters.green * lightParameters.intensity,
+									lightParameters.blue * lightParameters.intensity);
+					uniforms.normalScale.value = new THREE.Vector2( textureParameters.normalScale, textureParameters.normalScale );
+					uniforms.cdiff.value = new THREE.Vector3 (textureParameters.RedColor, textureParameters.GreenColor, textureParameters.BlueColor);
+			}
+
+			init();
+			buildGui();
+			update();
+			render();
+
+		</script>
+	</body>
+</html>
