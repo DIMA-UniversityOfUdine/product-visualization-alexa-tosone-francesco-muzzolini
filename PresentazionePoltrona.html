@@ -192,9 +192,9 @@
 			var normalMapPelle = loadTexture( "textures/pelle.jpg" );
 			var normalMapTessuto = loadTexture( "textures/tessuto.jpg" );
 			var Rpelle = 0.32;
-			var Rtessuto = 0.55;
+			var Rtessuto = 0.57;
 			var cspecPelle = new THREE.Vector3(0.001,0.001,0.001);
-			var cspecTessuto = new THREE.Vector3(0.0005,0.0005,0.0005);
+			var cspecTessuto = new THREE.Vector3(0.0001,0.0001,0.0001);
 
 			var uniforms = {
 				    cspec:	{ type: "v3", value: cspecPelle },
@@ -223,16 +223,16 @@
 				} );
 			
 			
-			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 0.01, 16, 16), new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:true}));
+			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 0.000001, 1, 1), new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:false}));
 			lightMesh.position.set( 0.0, 15.0, 0.0 );
 			uniforms.pointLightPosition.value = new THREE.Vector3(lightMesh.position.x,	lightMesh.position.y, lightMesh.position.z);
 			
-			var light2 = new THREE.Mesh (new THREE.SphereGeometry( 0.01, 16, 16), new THREE.MeshBasicMaterial ({color: 0xff0000, wireframe:true}));
-			light2.position.set (0.0, 10.0, 10.0);
+			var light2 = new THREE.Mesh (new THREE.SphereGeometry( 0.000001, 1, 1), new THREE.MeshBasicMaterial ({color: 0xff0000, wireframe:false}));
+			light2.position.set (-6.0, 10.0, 14.0);
 			uniforms.pointLightPosition2.value = new THREE.Vector3(light2.position.x,	light2.position.y, light2.position.z);
 			
-			var light3 = new THREE.Mesh (new THREE.SphereGeometry( 0.01, 16, 16), new THREE.MeshBasicMaterial ({color: 0x0000ff, wireframe:true}));
-			light3.position.set (0.0, 10.0, -10.0);
+			var light3 = new THREE.Mesh (new THREE.SphereGeometry( 0.000001, 1, 1), new THREE.MeshBasicMaterial ({color: 0x0000ff, wireframe:false}));
+			light3.position.set (6.0, 10.0, -14.0);
 			uniforms.pointLightPosition3.value = new THREE.Vector3(light3.position.x,	light3.position.y, light3.position.z);
 			
 			
@@ -311,7 +311,7 @@
 				var materialB = new THREE.MeshBasicMaterial( { color: 0xdddd00 } );
 				lampadina = new THREE.Mesh( geometryB, materialB );
 				lampadina.material.side = THREE.DoubleSide;
-				lampadina.position.set(0, 10, 10);
+				lampadina.position.set(0, 10, 14);
 				//scene.add(lampadina);
 				
 				//sostegno
@@ -342,7 +342,7 @@
 				var sostegnoDX = sostegno.clone();
 				var piedeDX = piede.clone();
 				
-				lampadinaDX.position.set(0, 10, -10);
+				lampadinaDX.position.set(0, 10, -14);
 				lampadinaDX.rotation.y = -120 * Math.PI/180;
 				
 				scene.add(lampadinaDX);
@@ -397,12 +397,12 @@
 			var materialP = new THREE.MeshPhongMaterial( { map: textureP } );
 			var materialFloor = new THREE.MeshPhongMaterial( { map: textureFloor } );
 			var right = new THREE.Mesh( geometryP, materialP );
-			right.position.set(0, 12,-25); 
-			right.scale.set(2.5, 1.5, 1); 
+			right.position.set(0, 12,-30); 
+			right.scale.set(3, 1.5, 1); 
 			var left = new THREE.Mesh( geometryP, materialP );
 			left.rotation.y = 180 * Math.PI/180;
-			left.position.set(0,12,25); 
-			left.scale.set(2.5, 1.5, 1);
+			left.position.set(0,12,30); 
+			left.scale.set(3, 1.5, 1);
 			var floor = new THREE.Mesh( geometryP, materialFloor );
 			floor.rotation.x = -90 * Math.PI/180;
 			floor.position.set(0, -3,0); 
@@ -410,15 +410,15 @@
 			var top = new THREE.Mesh( geometryP, materialP );
 			top.rotation.x = 90 * Math.PI/180;
 			top.position.set(0, 27,0); 
-			top.scale.set(2.5, 2.5, 1);
+			top.scale.set(4, 4, 1);
 			var front = new THREE.Mesh( geometryP, materialP );
 			front.rotation.y = -90 * Math.PI/180;
-			front.position.set(25,12,0); 
-			front.scale.set(2.5, 1.5, 1);
+			front.position.set(30,12,0); 
+			front.scale.set(3, 1.5, 1);
 			var back = new THREE.Mesh( geometryP, materialP );
 			back.rotation.y = 90 * Math.PI/180;
-			back.position.set(-25,12,0);
-			back.scale.set(2.5, 1.5, 1);
+			back.position.set(-30,12,0);
+			back.scale.set(3, 1.5, 1);
 			
 			scene.add(right, left, floor, top, front, back);
 			//fine stanza
