@@ -1,5 +1,11 @@
 Log dei progressi effettuati
 
+
+
+NB! Il file di riferimento è "PresentazionePoltrona.html"
+
+
+
 L'oggetto scelto è una poltrona e l'ambiente in cui presentarla una stanza semplice, ove delle lampade proiettano luce direttamente su di essa. 
 
 Il modello della poltrona è composto da circa 36.000 (36 mila) vertici ed è stato reperito su un sito gratuitamente (la licenza che non se ne faccia uso commerciale).
