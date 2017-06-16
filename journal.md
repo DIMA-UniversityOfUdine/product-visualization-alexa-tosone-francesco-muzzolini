@@ -2,7 +2,7 @@ Log dei progressi effettuati
 
 
 
-NB! Il file di riferimento è "PresentazionePoltrona.html"
+NB! Il file di riferimento è "index.html"
 
 
 
