@@ -6,28 +6,26 @@ The project source code is entirely contained in the "index.html" file.
 
 # Development
 
-1.  First, we choose the model according to the requirements: it has 36.000 vertices and was founded online, available for non-     
-    commercial use.
-    We choose an armchair because it can be made of several materials and all possible colors, so we could give the users lot of     
-    alternatives.
+1.  First, we choose the model according to the requirements: it has 36.000 vertices and was founded online, available for non-commercial use.
+We choose an armchair because it can be made of several materials and all possible colors, so we could give the users lot of alternatives.
     
 2.  Then, we focused on the context. We decide to put the armchair in the center of an empty room, made by white walls and a parquet.
 
-3.  We added a sfot white environmetal light but, since it was still too "grey", we decided to add two supplementar directional lights 
-    towards the walls of the room. 
+3.  We added a sfot white environmetal light but, since it was still too "grey", we decided to add two supplementar directional lights
+towards the walls of the room. 
     
 4.  Using "B2M" program, we create all the necessary normal maps, expecially those for leather and fabric.
 
-5.  We wrote down our personal shaders focusing on normals, roughness, specular and diffuse terms for both the materials. Using the     
-    shaders we added to the scene three point lights: one on the right of the armchair, one on the left side, and the last above it. In 
-    this way we wanted to make sure that the 3D model was well illuminated. 
+5.  We wrote down our personal shaders focusing on normals, roughness, specular and diffuse terms for both the materials. Using the
+shaders we added to the scene three point lights: one on the right of the armchair, one on the left side, and the last above it. In this way we wanted to make sure that the 3D model was well illuminated. 
     
     The shader equations we used are those studied during the course.
 
-6.  To justify the presence of the three point light we modeled three lamps and then place them in the scene, according to light 
-    positions. 
+6.  To justify the presence of the three point light we modeled three lamps and then place them in the scene, according to light positions. 
+
+7.  We build a very basic GUI to allow the user change material between leather and fabric, and change the color between all possible combinations of RGB.
    
-7.  We focused on the ambient occlusion and, eventually, decided to change the context of our armchair. 
+8.  We focused on the ambient occlusion and, eventually, decided to change the context of our armchair. 
 
 # ProductVisualization
 
