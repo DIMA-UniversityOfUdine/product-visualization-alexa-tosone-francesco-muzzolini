@@ -20,7 +20,7 @@ At this point we were using shaders only for rendering the armchair.
 5.  We wrote down our personal shaders focusing on normals, roughness, specular and diffuse terms for both the materials. Using the
 shaders we added to the scene three point lights: one on the right of the armchair, one on the left side, and the last above it. In this way we wanted to make sure that the 3D model was well illuminated. 
     
-The shader equations we used are those studied during the course but, at this point, only the armchair was using these.
+    The shader equations we used are those studied during the course but, at this point, only the armchair was using these.
 
 6.  To justify the presence of the three point lights we modeled three lamps and then place them in the scene, according to light positions. 
 
@@ -31,6 +31,8 @@ The shader equations we used are those studied during the course but, at this po
 9.  We create a special material for each object using the diffuse maps as values for cdiff, so that now is not necessary to set them manually. 
    
 10.  We focused on the ambient occlusion: we first create the AO maps with "B2M" and then apply each map to the corresponding object using shaders. 
+
+11. We improved the GUI and added some element in the page to make it seem an e-commerce site.
 
 
 
