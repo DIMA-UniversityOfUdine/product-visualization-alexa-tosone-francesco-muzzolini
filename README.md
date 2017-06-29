@@ -9,23 +9,30 @@ The project source code is entirely contained in the "index.html" file.
 1.  First, we choose the model according to the requirements: it has 36.000 vertices and was founded online, available for non-commercial use.
 We choose an armchair because it can be made of several materials and all possible colors, so we could give the users lot of alternatives.
     
-2.  Then, we focused on the context. We decide to put the armchair in the center of an empty room, made by white walls and a parquet.
+2.  Then, we focused on the context. We decided to put the armchair in the center of an empty room, made only by white walls and a parquet, to make sure the attention of the user will be captured by the armchair, and not disturbed by other things.
 
 3.  We added a sfot white environmetal light but, since it was still too "grey", we decided to add two supplementar directional lights
-towards the walls of the room. 
+towards the walls of the room. These lights were "outside" the shaders and that's the main reason why later we removed them. 
+At this point we were using shaders only for rendering the armchair.
     
 4.  Using "B2M" program, we create all the necessary normal maps, expecially those for leather and fabric.
 
 5.  We wrote down our personal shaders focusing on normals, roughness, specular and diffuse terms for both the materials. Using the
 shaders we added to the scene three point lights: one on the right of the armchair, one on the left side, and the last above it. In this way we wanted to make sure that the 3D model was well illuminated. 
     
-    The shader equations we used are those studied during the course.
+The shader equations we used are those studied during the course but, at this point, only the armchair was using these.
 
-6.  To justify the presence of the three point light we modeled three lamps and then place them in the scene, according to light positions. 
+6.  To justify the presence of the three point lights we modeled three lamps and then place them in the scene, according to light positions. 
 
 7.  We build a very basic GUI to allow the user change material between leather and fabric, and change the color between all possible combinations of RGB.
+
+8.  Since the ambient and directional lights added at point 3 were given an uniform and innatural illumination to the scene, we decided to remove them and render EVERY object using the three point lights in our vertex and fragment shaders. 
+
+9.  We create a special material for each object using the diffuse maps as values for cdiff, so that now is not necessary to set them manually. 
    
-8.  We focused on the ambient occlusion and, eventually, decided to change the context of our armchair. 
+10.  We focused on the ambient occlusion: we first create the AO maps with "B2M" and then apply each map to the corresponding object using shaders. 
+
+
 
 # ProductVisualization
 
