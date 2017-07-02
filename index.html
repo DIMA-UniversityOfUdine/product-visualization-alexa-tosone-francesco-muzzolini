@@ -1,37 +1,140 @@
 <!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
 <html lang="en">
-	<head>
-		<title>three.js webgl - normal mapping</title>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-		<style>
-			body {
-				background-color: #f0f0f0;
-				margin: 0px;
-				overflow: hidden;
-			}
+<!--<![endif]-->
+<!-- HEAD SECTION -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--[if IE]>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <![endif]-->
+    <title>Product-Visualization<!--Bootstrap Personal Portfolio Template For Free by Binary Theme--></title>
+    <!--GOOGLE FONT -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!--BOOTSTRAP MAIN STYLES -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!--FONTAWESOME MAIN STYLE -->
+    <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!--CUSTOM STYLE -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+    <!--END HEAD SECTION -->
+<body>   
+     <!-- NAV SECTION -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">ACME</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#header-section">HOME</a></li>
+                    <li><a href="#about-section">TUTTI I PRODOTTI</a></li>
+                    <li><a href="#NOPEproducts-section">IL TUO CARRELLO</a></li>
+                   <!-- <li><a href="#contact-section">HIRE ME</a></li>-->
+                    <li><a href="#contact-section">CONTATTACI</a></li>
+                </ul>
+            </div>
+           
+        </div>
+    </div>
+     <!--END NAV SECTION -->
+     <!-- HEADER SECTION -->
+    <div id="header-section">
+        <div class="container">
+            <div class="row centered">
+                <div class="col-md-8 col-md-offset-2">
+                    <h1><strong> Produciamo qualità</strong>          
+                     
+                    </h1>
+                     <br /> <br /> <br />
+                    <h2> ACME può soddisfare qualsiasi esigenza, scopri qui sotto il prodotto del giorno!</h2>
+                     <br />
+                  <a href="#products-section">  <i class="fa fa-angle-double-down fa-5x down-icon"></i> </a>
+                </div>
+            </div>
+           
+        </div>
+       
+    </div> 
+      <!--END HEADER SECTION -->
+    <!--ABOUT SECTION -->
+    <!--<div id="about-section" >
+        <div class="container" >
+            <div class="row main-top-margin text-center">
+                <div class="col-md-8 col-md-offset-2 " data-scrollreveal="enter top and move 100px, wait 0.3s">
+                    <h1>What exactly is ACME?</h1>
+                    <h4>
+                       ACME it's a proud company that manifactures all sort of products.
+                    </h4>
+                </div>
+            </div>
+            <!-- ./ Main Heading-->
+            <!--<div class="row main-low-margin text-center">
+                <div class="col-md-3 " data-scrollreveal="enter left and move 100px, wait 0.4s">
+                    <img class="img-circle" src="assets/img/team/team1.png" alt="">
+                    <h4><strong>We choose only qualified staff</strong> </h4>
+                    <p>
+                        Our community managers would gladly answer your questions. Contanct us with your favourite social network!
 
-			#info {
-				position: absolute;
-				top: 0px; width: 100%;
-				color: #222;
-				padding: 5px;
-				font-family: Monospace;
-				font-size: 13px;
-				text-align: center;
-			}
+                    </p>
+                    <p>
+                       <a href="#"><i class="fa fa-facebook-square fa-2x color-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter-square fa-2x color-twitter"></i></a>
+                        <a href="#"><i class="fa fa-google-plus-square fa-2x color-google-plus"></i></a>
+                        <a href="#"><i class="fa fa-linkedin-square fa-2x color-linkedin"></i></a>
+                        <a href="#"><i class="fa fa-pinterest-square fa-2x color-pinterest"></i></a>
 
-			a {
-				color: #000;
-				text-decoration: none;
-			}
+                    </p>
 
-			a:hover {
-				color: #0080ff;
-			}
-		</style>
-	</head>
-	<body>
+                </div>
+             
+                <div class="col-md-7 col-sm-7 col-md-offset-1  text-justify" data-scrollreveal="enter right and move 100px, wait 0.4s">
+                    <h3> Think about an object...</h3>
+                    <p>
+                         ...we probably have it on our stock already! ACME it's a huge company that has invested in all possibile sectors.
+
+                    </p>
+                    <p>
+                         Do you have a suggestion? Let us know!
+
+                    </p>
+                </div>
+            </div>
+              <!-- ./ Row Content-->
+       <!-- </div>
+    </div>
+    <!-- END ABOUT SECTION -->
+   
+   
+    <!--WORK/PRODUCTS SECTION -->
+    <div id="products-section" >
+         <div class="container" >
+            <div class="row main-top-margin text-center" data-scrollreveal="enter top <!--and move 100px, wait 0.3s-->">
+                <div class="col-md-8 col-md-offset-2 ">
+                    <h1>La poltrona ACME arreda ogni stanza</h1>
+                    <h2>
+                       <!-- INSERIRE IL VISUALIZER QUI
+					<script src="assets/js/visualize.js"></script>
+
+					   -->
+					 
 
 		
 		<script src="lib/three.min.js"></script>
@@ -64,13 +167,17 @@
 			uniform vec3 pointLightPosition; // in world space
 			uniform vec3 pointLightPosition2;
 			uniform vec3 pointLightPosition3;
+			uniform vec3 ambientLight;
+			uniform sampler2D diffuseMap;
 			uniform vec3 clight;
 			uniform vec3 cspec;
-			uniform vec3 cdiff;
 			uniform float roughness;
 			uniform sampler2D normalMap;
+			uniform sampler2D aoMap;
 			uniform vec2 normalScale;
+			uniform vec2 textureRepeat;
 			const float PI = 3.14159;
+			vec3 cdiff;
 
 			vec3 FSchlick(float lDoth) {
 				return (cspec + (vec3(1.0)-cspec)*pow(1.0 - lDoth,5.0));
@@ -104,7 +211,7 @@
 			vec3 T = normalize( -q0 * st1.s + q1 * st0.s );
 			vec3 N =  surf_norm ;
 
-			vec3 mapN = normalize(texture2D( normalMap, uVv ).xyz * 2.0 - 1.0);
+			vec3 mapN = normalize(texture2D( normalMap, uVv * textureRepeat ).xyz * 2.0 - 1.0);
 			mapN.xy = normalScale * mapN.xy;
 			mat3 tsn = mat3( S, T, N );
 			return normalize( tsn * mapN );
@@ -140,20 +247,24 @@
 				float nDoth3 = max(dot( n, h3 ),0.000001);
 				float vDoth3 = max(dot( v, h3 ),0.000001);
 				
+				cdiff = texture2D( diffuseMap, uVv*textureRepeat ).rgb;
+				// texture in sRGB, linearize
+				cdiff = pow( cdiff, vec3(2.2));
+				
 				vec3 fresnel = FSchlick(lDoth);
 				vec3 BRDF = (vec3(1.0)-fresnel)*cdiff/PI + fresnel*GSmith(nDotv,nDotl)*DGGX(nDoth,roughness*roughness)/
 					(4.0*nDotl*nDotv);
-				vec3 outRadiance1 = PI* clight * nDotl * BRDF;
+				vec3 outRadiance1 = PI* clight * nDotl * BRDF + ambientLight*cdiff*texture2D( aoMap, uVv * textureRepeat ).xyz;
 				
 				vec3 fresnel2 = FSchlick(lDoth2);
 				vec3 BRDF2 = (vec3(1.0)-fresnel2)*cdiff/PI + fresnel2*GSmith(nDotv,nDotl2)*DGGX(nDoth2,roughness*roughness)/
 					(4.0*nDotl2*nDotv);
-				vec3 outRadiance2 = PI* clight * nDotl2 * BRDF2;
+				vec3 outRadiance2 = PI* clight * nDotl2 * BRDF2 + ambientLight*cdiff*texture2D( aoMap, uVv * textureRepeat ).xyz;
 				
 				vec3 fresnel3 = FSchlick(lDoth3);
 				vec3 BRDF3 = (vec3(1.0)-fresnel3)*cdiff/PI + fresnel3*GSmith(nDotv,nDotl3)*DGGX(nDoth3,roughness*roughness)/
 					(4.0*nDotl3*nDotv);
-				vec3 outRadiance3 = PI* clight * nDotl3 * BRDF3;
+				vec3 outRadiance3 = PI* clight * nDotl3 * BRDF3 + ambientLight*cdiff*texture2D( aoMap, uVv * textureRepeat ).xyz;
 				
 				vec3 outRadiance = outRadiance1+outRadiance2+outRadiance3;
 				// gamma encode the final value
@@ -177,35 +288,65 @@
 				red: 1.0,
 				green: 1.0,
 				blue: 1.0,
-				intensity: 5.0,
+				intensity: 0.3,
+			}
+			
+			var ambientLightParameters = {
+				red: 0.1,
+				green: 0.1,
+				blue: 0.1,
+				intensity: 0.1,
 			}
 
 			var textureParameters = {
-				normalScale: 0.27,
-				RedColor: 0.011,
-				GreenColor: 0,
-				BlueColor: 0,
+				colore : "rosso",
 				w:"pelle",				
 			}
 			
-			
+			var diffuseMapPelleRossa = loadTexture( "textures/red_leather.jpg" );
+			var diffuseMapPelleBlu = loadTexture( "textures/blu_leather.jpg" );
+			var diffuseMapPelleBianca = loadTexture( "textures/white_leather.jpg" );
+			var diffuseMapPelleNera = loadTexture( "textures/black_leather.jpg" );
+			var diffuseMapPellePanna = loadTexture( "textures/brown_leather.jpg" );
+			var diffuseMapWall = loadTexture( "textures/concreteWall.jpg" );
+			var diffuseMapLamp = loadTexture( "textures/whitelamp.jpg" );
+			var diffuseMapFloor = loadTexture( "textures/wall.jpg" );
+			var diffuseMapTessutoRosso = loadTexture( "textures/red_fabric.jpg" );
+			var diffuseMapTessutoBlu = loadTexture( "textures/blu_fabric.jpg" );
+			var diffuseMapTessutoNero = loadTexture( "textures/black_fabric.jpg" );
+			var diffuseMapTessutoBianco = loadTexture( "textures/white_fabric.jpg" );
+			var diffuseMapTessutoPanna = loadTexture( "textures/brown_fabric.jpg" );
 			var normalMapPelle = loadTexture( "textures/normal.jpg" );
 			var normalMapTessuto = loadTexture( "textures/normalFabric.jpg" );
-			var Rpelle = 0.32;
-			var Rtessuto = 0.9;
-			var cspecPelle = new THREE.Vector3(0.001,0.001,0.001);
-			var cspecTessuto = new THREE.Vector3(0.00001,0.00001,0.00001);
+			var Rpelle = 0.4;
+			var Rtessuto = 0.8;
+			var cspecPelle = new THREE.Vector3(0.01,0.01,0.01);
+			var cspecTessuto = new THREE.Vector3(0.01,0.01,0.01);
+			
+			var loader = new THREE.CubeTextureLoader();
+				loader.setPath( 'textures/cloudy/' );
 
+				var textureCube = loader.load( [   //per cloudy
+					'bluecloud_lf.jpg', 'bluecloud_rt.jpg',
+					'bluecloud_dn.jpg', 'bluecloud_up.jpg',
+					'bluecloud_ft.jpg', 'bluecloud_bk.jpg'
+				] );
+				
+			scene.background = textureCube;
+			
 			var uniforms = {
 				    cspec:	{ type: "v3", value: cspecPelle },
-				    cdiff:	{ type: "v3", value: new THREE.Vector3(0,0,0) },
+				    diffuseMap:	{ type: "t", value: diffuseMapPelleRossa},
 				    roughness: {type: "f", value: Rpelle},
 					  normalMap:	{ type: "t", value: normalMapPelle},
+					  aoMap:	{ type: "t", value: loadTexture("textures/AO/pelleAO.jpg")},
 						normalScale: {type: "v2", value: new THREE.Vector2(1,1)},
 						pointLightPosition:	{ type: "v3", value: new THREE.Vector3() },
 						pointLightPosition2:	{ type: "v3", value: new THREE.Vector3() },
 						pointLightPosition3:	{ type: "v3", value: new THREE.Vector3() },
-						clight:	{ type: "v3", value: new THREE.Vector3() },
+						clight:	{ type: "v3", value: new THREE.Vector3(0.2, 0.2, 0.2) },
+						ambientLight:	{ type: "v3", value: new THREE.Vector3(0.05, 0.05, 0.05) },
+						textureRepeat: { type: "v2", value: new THREE.Vector2(1, 1) }
 					};
 
 			vs = document.getElementById("vertex").textContent;
@@ -213,26 +354,76 @@
 
 			var ourMaterial = new THREE.ShaderMaterial({ uniforms: uniforms, vertexShader: vs, fragmentShader: fs });
 
+			var uniforms2 = {
+				    cspec:	{ type: "v3", value: new THREE.Vector3(0.01,0.01,0.01) },
+				    diffuseMap:	{ type: "t", value: diffuseMapWall},
+				    roughness: {type: "f", value: 0.7},
+					  normalMap:	{ type: "t", value: normalMapPelle},
+					  aoMap:	{ type: "t", value: loadTexture( "textures/AO/cementoAO.jpg" )},
+						normalScale: {type: "v2", value: new THREE.Vector2(0,0)},
+						pointLightPosition:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition2:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition3:	{ type: "v3", value: new THREE.Vector3() },
+						clight:	{ type: "v3", value: new THREE.Vector3(0.2, 0.2, 0.2) },
+						ambientLight:	{ type: "v3", value: new THREE.Vector3(0.02, 0.02, 0.02) },
+						textureRepeat: { type: "v2", value: new THREE.Vector2(1,1) }
+					};
+					
+			var uniforms3 = {
+				    cspec:	{ type: "v3", value: new THREE.Vector3(0.5,0.5,0.5) },
+				    diffuseMap:	{ type: "t", value: diffuseMapLamp},
+				    roughness: {type: "f", value: 0.7},
+					  normalMap:	{ type: "t", value: normalMapPelle},
+					  aoMap:	{ type: "t", value: loadTexture( "textures/AO/pelleAO.jpg" )},
+						normalScale: {type: "v2", value: new THREE.Vector2(0,0)},
+						pointLightPosition:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition2:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition3:	{ type: "v3", value: new THREE.Vector3() },
+						clight:	{ type: "v3", value: new THREE.Vector3(0.5, 0.5, 0.5) },
+						ambientLight:	{ type: "v3", value: new THREE.Vector3(0.2, 0.2, 0.2) },
+						textureRepeat: { type: "v2", value: new THREE.Vector2(1,1) }
+					};
+			
+			var uniforms4 = {
+				    cspec:	{ type: "v3", value: new THREE.Vector3(0.0001, 0.0001, 0.0001) },
+				    diffuseMap:	{ type: "t", value: diffuseMapFloor},
+				    roughness: {type: "f", value: 0.7},
+					  normalMap:	{ type: "t", value: normalMapPelle},
+					  aoMap:	{ type: "t", value: loadTexture( "textures/AO/legnoAO.jpg" ) },
+						normalScale: {type: "v2", value: new THREE.Vector2(0,0)},
+						pointLightPosition:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition2:	{ type: "v3", value: new THREE.Vector3() },
+						pointLightPosition3:	{ type: "v3", value: new THREE.Vector3() },
+						clight:	{ type: "v3", value: new THREE.Vector3(0.1, 0.1, 0.1) },
+						ambientLight:	{ type: "v3", value: new THREE.Vector3(0.04, 0.04, 0.04) },
+						textureRepeat: { type: "v2", value: new THREE.Vector2(1,1) }
+					};
+			
+			var materialWall = new THREE.ShaderMaterial({ uniforms: uniforms2, vertexShader: vs, fragmentShader: fs });
+			var materialLamp = new THREE.ShaderMaterial({ uniforms: uniforms3, vertexShader: vs, fragmentShader: fs });
+			var materialFloor = new THREE.ShaderMaterial({ uniforms: uniforms4, vertexShader: vs, fragmentShader: fs });
+			
 			var loader = new THREE.OBJLoader();
 				loader.load( "modelli/armchair.obj", function ( group ) {
 					geometry = group.children[ 0 ].geometry;
 					geometry.center();
 					mesh = new THREE.Mesh( geometry, ourMaterial );
+					
 					mesh.scale.multiplyScalar( 0.1 );
 					scene.add( mesh );
 				} );
 			
 			
-			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 0.000001, 1, 1), new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:false}));
-			lightMesh.position.set( 0.0, 15.0, 0.0 );
+			var lightMesh = new THREE.Mesh( new THREE.SphereGeometry( 0.0000001, 1, 1), new THREE.MeshBasicMaterial ({color: 0xffff00, wireframe:false}));
+			lightMesh.position.set( 0.0, 14.0, 0.0 );
 			uniforms.pointLightPosition.value = new THREE.Vector3(lightMesh.position.x,	lightMesh.position.y, lightMesh.position.z);
 			
-			var light2 = new THREE.Mesh (new THREE.SphereGeometry( 0.000001, 1, 1), new THREE.MeshBasicMaterial ({color: 0xff0000, wireframe:false}));
-			light2.position.set (-6.0, 10.0, 14.0);
+			var light2 = new THREE.Mesh (new THREE.SphereGeometry( 0.0000001, 1, 1), new THREE.MeshBasicMaterial ({color: 0xff0000, wireframe:false}));
+			light2.position.set (0, 10.0, 14.0);
 			uniforms.pointLightPosition2.value = new THREE.Vector3(light2.position.x,	light2.position.y, light2.position.z);
 			
-			var light3 = new THREE.Mesh (new THREE.SphereGeometry( 0.000001, 1, 1), new THREE.MeshBasicMaterial ({color: 0x0000ff, wireframe:false}));
-			light3.position.set (6.0, 10.0, -14.0);
+			var light3 = new THREE.Mesh (new THREE.SphereGeometry( 0.0000001, 1, 1), new THREE.MeshBasicMaterial ({color: 0x0000ff, wireframe:false}));
+			light3.position.set (0, 10.0, -14.0);
 			uniforms.pointLightPosition3.value = new THREE.Vector3(light3.position.x,	light3.position.y, light3.position.z);
 			
 			
@@ -245,7 +436,7 @@
 
 						texture.minFilter = THREE.LinearMipMapLinearFilter;
 						texture.anisotropy = renderer.getMaxAnisotropy();
-						texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+						texture.wrapS = texture.wrapT = THREE.MirroredRepeatWrapping;
 						texture.offset.set( 0, 0 );
 						texture.needsUpdate = true;
 						render();
@@ -285,17 +476,17 @@
 				//Coordinates.drawAllAxes();
 
 				window.addEventListener( 'resize', onResize, false );
-
+				/*
 				stats.domElement.style.position = 'absolute';
 				stats.domElement.style.top = '0px';
 				document.body.appendChild( stats.domElement );
-
+				*/
 				ourMaterial.needsUpdate = true;
+				materialWall.needsUpdate = true;
 
 						
 				//inizio creazione lampada sinistra
 				var textureLamp = THREE.ImageUtils.loadTexture('textures/whitelamp.jpg');
-				var materialLamp = new THREE.MeshPhongMaterial( { map: textureLamp } );
 				
 				//nota : SphereGeometry(radius, widthSegments, heightSegments, phiStart, phiLength, thetaStart, thetaLength)
 				var geometryA = new THREE.SphereGeometry( 1.5, 60, 60, Math.PI, Math.PI/1.4, Math.PI);  //( 50, 60, 60, Math.PI, Math.PI, 3*Math.PI/2);
@@ -394,37 +585,47 @@
 			var geometryP = new THREE.PlaneGeometry(20,20);
 			var textureP = THREE.ImageUtils.loadTexture('textures/concreteWall.jpg');
 			var textureFloor = THREE.ImageUtils.loadTexture('textures/wall.jpg');
-			var materialP = new THREE.MeshPhongMaterial( { map: textureP } );
-			var materialFloor = new THREE.MeshPhongMaterial( { map: textureFloor } );
-			var right = new THREE.Mesh( geometryP, materialP );
-			right.position.set(0, 12,-30); 
-			right.scale.set(3, 1.5, 1); 
-			var left = new THREE.Mesh( geometryP, materialP );
+
+			var right = new THREE.Mesh( geometryP, materialWall );
+			right.position.set(0, 12,-35); 
+			right.scale.set(4, 1.5, 1); 
+			var left = new THREE.Mesh( geometryP, materialWall );
 			left.rotation.y = 180 * Math.PI/180;
-			left.position.set(0,12,30); 
-			left.scale.set(3, 1.5, 1);
+			left.position.set(0,12,35); 
+			left.scale.set(4, 1.5, 1);
 			var floor = new THREE.Mesh( geometryP, materialFloor );
 			floor.rotation.x = -90 * Math.PI/180;
 			floor.position.set(0, -3,0); 
 			floor.scale.set(4, 4, 1); 
-			var top = new THREE.Mesh( geometryP, materialP );
+			var edge1 = new THREE.Mesh( new THREE.CubeGeometry(70,0.8,0.3), materialFloor );
+			edge1.position.set(0, -2.6, -34.85); 
+			var edge2 = new THREE.Mesh( new THREE.CubeGeometry(70,0.8,0.3), materialFloor );
+			edge2.position.set(0, -2.6, 34.85); 
+			var edge3 = new THREE.Mesh( new THREE.CubeGeometry(70,0.8,0.3), materialFloor );
+			edge3.rotation.y = 90 * Math.PI/180;
+			edge3.position.set(34.85, -2.6, 0); 
+			var edge4 = new THREE.Mesh( new THREE.CubeGeometry(70,0.8,0.3), materialFloor );
+			edge4.rotation.y = 90 * Math.PI/180;
+			edge4.position.set(-34.85, -2.6, 0); 
+			var top = new THREE.Mesh( geometryP, materialWall );
 			top.rotation.x = 90 * Math.PI/180;
 			top.position.set(0, 27,0); 
-			top.scale.set(4, 4, 1);
-			var front = new THREE.Mesh( geometryP, materialP );
+			top.scale.set(5, 5, 1);
+			var front = new THREE.Mesh( geometryP, materialWall );
 			front.rotation.y = -90 * Math.PI/180;
-			front.position.set(30,12,0); 
-			front.scale.set(3, 1.5, 1);
-			var back = new THREE.Mesh( geometryP, materialP );
+			front.position.set(35,12,0); 
+			front.scale.set(4, 1.5, 1);
+			var back = new THREE.Mesh( geometryP, materialWall );
 			back.rotation.y = 90 * Math.PI/180;
-			back.position.set(-30,12,0);
-			back.scale.set(3, 1.5, 1);
+			back.position.set(-35,12,0);
+			back.scale.set(4, 1.5, 1);
 			
-			scene.add(right, left, floor, top, front, back);
+			scene.add(right, left, floor, edge1, edge2, edge3, edge4, top, front, back);
 			//fine stanza
 				
-			var amblight = new THREE.AmbientLight( 0x808080 ); 
-                scene.add( amblight );
+			/*var amblight = new THREE.AmbientLight( 0x808080 ); 
+                amblight.position.set(0, 15, 5);
+				scene.add( amblight );
 			
 			var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );  // (color, intensity)
 				directionalLight.position.set( -15, -15, -15 );
@@ -435,6 +636,7 @@
 				directionalLight2.position.set( +15, 0, +15 );
 				directionalLight2.target.position.set( -15, 0, -15 );
 				scene.add( directionalLight2 );
+			*/
 			
 			} //fine init
 
@@ -462,7 +664,15 @@
 			function clearGui() {
 
 				if ( gui ) gui.destroy();
-				gui = new dat.GUI();
+				gui = new dat.GUI({ autoPlace: false });
+				gui.domElement.style.position = 'absolute';
+				gui.domElement.style.bottom = '0px';
+				document.body.appendChild( gui.domElement);
+				/*
+				stats.domElement.style.position = 'absolute';
+				stats.domElement.style.top = '0px';
+				document.body.appendChild( stats.domElement );
+				*/
 				gui.open();
 
 			}
@@ -482,31 +692,75 @@
 				lightSettings.add(lightParameters,'intensity').min(0).max(10000).onChange( function(newVal) { render() });
 				*/
 				
-				textureSettings = gui.addFolder('Colore');
+				
+				/*ambientLightSettings = gui.addFolder('Ambient Light Parameters');
+				ambientLightSettings.add(ambientLightParameters,'red').min(0).max(1).onChange( function(newVal) { render() });
+				ambientLightSettings.add(ambientLightParameters,'green').min(0).max(1).onChange( function(newVal) { render() });
+				ambientLightSettings.add(ambientLightParameters,'blue').min(0).max(1).onChange( function(newVal) { render() });
+				ambientLightSettings.add(ambientLightParameters,'intensity').min(0).max(10000).onChange( function(newVal) { render() });*/
+				
+				/*textureSettings = gui.addFolder('Colore');
 				//textureSettings.add(textureParameters,'normalScale').min(-3).max(3).onChange( function( newVal ) {render()});
-				textureSettings.add(textureParameters,'RedColor').min(0).max(0.06).onChange( function( newVal ) {render()});
-				textureSettings.add(textureParameters,'GreenColor').min(0).max(0.06).onChange( function( newVal ) {render()});
-				textureSettings.add(textureParameters,'BlueColor').min(0).max(0.06).onChange( function( newVal ) {render()});
+				textureSettings.add(textureParameters,'RedColor').min(0).max(1).onChange( function( newVal ) {render()});
+				textureSettings.add(textureParameters,'GreenColor').min(0).max(1).onChange( function( newVal ) {render()});
+				textureSettings.add(textureParameters,'BlueColor').min(0).max(1).onChange( function( newVal ) {render()});
+				*/
 				var StringList = ["pelle", "tessuto"];
 				gui.add(textureParameters,'w', StringList).name('materiale').onChange( function( newVal ) {render()});
+				var Colori = ["rosso", "nero", "blu", "bianco", "marrone"];
+				gui.add(textureParameters,'colore', Colori).name('colore').onChange( function( newVal ) {render()});
 				}
 
 			function updateUniforms() {
 
-					uniforms.clight.value = new THREE.Vector3(
+					/*uniforms.clight.value = new THREE.Vector3(
 									lightParameters.red * lightParameters.intensity,
 									lightParameters.green * lightParameters.intensity,
 									lightParameters.blue * lightParameters.intensity);
-					uniforms.normalScale.value = new THREE.Vector2( textureParameters.normalScale, textureParameters.normalScale );
-					uniforms.cdiff.value = new THREE.Vector3 (textureParameters.RedColor, textureParameters.GreenColor, textureParameters.BlueColor);
+					uniforms.normalScale.value = new THREE.Vector2( textureParameters.normalScale, textureParameters.normalScale ); */
+					//uniforms.cdiff.value = new THREE.Vector3 (textureParameters.RedColor, textureParameters.GreenColor, textureParameters.BlueColor);
 					if (textureParameters.w == "pelle") {
 						uniforms.normalMap.value = normalMapPelle;
 						uniforms.cspec.value = cspecPelle;
 						uniforms.roughness.value = Rpelle;
+						if (textureParameters.colore == "rosso") {
+							uniforms.diffuseMap.value = diffuseMapPelleRossa;
+							} else if (textureParameters.colore == "blu"){
+							uniforms.diffuseMap.value = diffuseMapPelleBlu;
+							} else if (textureParameters.colore == "nero"){
+							uniforms.diffuseMap.value = diffuseMapPelleNera;
+							} else if (textureParameters.colore == "bianco"){ 
+							uniforms.diffuseMap.value = diffuseMapPelleBianca;
+							} else {
+							uniforms.diffuseMap.value = diffuseMapPellePanna;
+							}
+						
 						} else { 
 								uniforms.normalMap.value = normalMapTessuto;
 								uniforms.cspec.value = cspecTessuto;
-								uniforms.roughness.value = Rtessuto;}
+								uniforms.roughness.value = Rtessuto;
+								if (textureParameters.colore == "rosso") {
+									uniforms.diffuseMap.value = diffuseMapTessutoRosso;
+									} else if (textureParameters.colore == "blu"){
+									uniforms.diffuseMap.value = diffuseMapTessutoBlu;
+									} else if (textureParameters.colore == "nero"){
+									uniforms.diffuseMap.value = diffuseMapTessutoNero;
+									} else if (textureParameters.colore == "bianco"){ 
+									uniforms.diffuseMap.value = diffuseMapTessutoBianco;
+									} else {
+									uniforms.diffuseMap.value = diffuseMapTessutoPanna;
+									}
+						}
+								
+					/*uniforms.ambientLight.value = new THREE.Vector3(
+									ambientLightParameters.red * ambientLightParameters.intensity,
+							    ambientLightParameters.green * ambientLightParameters.intensity,
+									ambientLightParameters.blue * ambientLightParameters.intensity);
+					uniforms2.diffuseMap.value = diffuseMapWall;
+					uniforms2.ambientLight.value = new THREE.Vector3(
+									ambientLightParameters.red * ambientLightParameters.intensity,
+							    ambientLightParameters.green * ambientLightParameters.intensity,
+									ambientLightParameters.blue * ambientLightParameters.intensity);*/
 			}
 
 			init();
@@ -515,5 +769,190 @@
 			render();
 
 		</script>
-	</body>
+					  
+                    </h2>
+					
+					<!--<h5>
+					<button type="button" onclick="clickHandler()">Click Me!</button>
+
+						<script>
+							function clickHandler() {
+							  alert("something");
+							}
+						</script>
+					<p><button type="button" class="material">MATERIALE</button></p>					
+					
+					</h5>-->
+					
+					<h3>
+					
+					</h3>
+					
+                </div>
+            </div>
+             <!-- ./ Main Heading-->
+			 <!--
+             <hr />
+            <div class="row main-low-margin" >
+                <div class="col-md-10  col-md-offset-1 ">
+ <div class="col-md-4 col-sm-4" data-scrollreveal="enter left and move 100px, wait 0.8s">
+                    <img src="assets/img/product/prd1.png" alt="">
+                </div>
+                <div class="col-md-8 " data-scrollreveal="enter right and move 100px, wait 0.4s">
+                    <h4 >  <strong class="color-red">Client Portfolio No # 1 </strong></h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+                    </p>
+                    <p>
+                        <i class="fa fa-check"></i> Responsive Design<br />
+                     <i class="fa fa-check"></i> 24x7 Support <br />
+                       <i class="fa fa-check"></i> Well Documented<br />
+                    </p>
+                    <a href="#" class="btn btn-success" >See Live Demo</a>
+                </div>
+                </div>
+               
+            </div>
+			-->
+            <!-- ./ Row Content-->
+			<!--
+            <hr />
+           <div class="row main-low-margin bottam-pad" >
+
+                 <div class="col-md-10  col-md-offset-1 ">
+                <div class="col-md-8 " data-scrollreveal="enter left and move 100px, wait 0.4s">
+                    <h4 >  <strong class="color-red">Client  Portfolio No # 2 </strong></h4>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+                    </p>
+                    <p>
+                        <i class="fa fa-check"></i> Responsive Design<br />
+                     <i class="fa fa-check"></i> 24x7 Support <br />
+                       <i class="fa fa-check"></i> Well Documented<br />
+                    </p>
+                    <a href="#" class="btn btn-danger" > See Live Demo</a>
+                </div>
+                <div class="col-md-4 " data-scrollreveal="enter right and move 100px, wait 0.4s">
+                    
+                    <img class="img-margin-product" src="assets/img/product/prd1.png" alt="">
+                </div>
+                     </div>
+            </div>
+			-->
+              <!-- ./ Row Content-->
+			 
+        </div>
+    </div>
+    <!--END WORK/PRODUCTS SECTION -->
+    <!--CONTACT SECTION -->
+    <!--<div id="contact-section">
+        <div class="container" >
+            <div class="row main-top-margin text-center">
+                <div class="col-md-8 col-md-offset-2 " data-scrollreveal="enter top and move 100px, wait 0.3s">
+                    <h1>Contact Us</h1>
+                    <h4><!--
+                       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                         Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.-->
+                   <!-- </h4>
+                </div>
+            </div>
+            <!-- ./ Main Heading-->
+            <!--<div class="row">
+                <div class="col-md-12  col-sm-12 ">
+                    <div class="col-md-6  " data-scrollreveal="enter left and move 100px, wait 0.4s">
+                        <h3> Our central office</h3>
+                        <hr />
+                        <p>
+                        93, ACME Street,<br />
+                            Demo Lane Road,<br />
+                            New Acme, ACMELAND.<br />                          
+                        <br />
+                        Email: ACMECO@ACMEdomain.com<br />
+                            </p>
+                       
+                    </div>
+                    <div class="col-md-6  " data-scrollreveal="enter right and move 100px, wait 0.4s">
+                        <h3>Drop a Line or Work for Us </h3>
+                        <hr />
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" required="required" placeholder="Name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" required="required" placeholder="Email address">
+                                    </div>
+                                </div>
+                            </div>
+                              <div class="row">
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" required="required" placeholder="Subject">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control"  placeholder="Ref. (IF any)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <div class="form-group">
+                                        <textarea name="message" id="message" required="required" class="form-control" rows="3"  placeholder="Message"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Submit Request</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                </div>
+            </div>
+             <!-- ./ Row Content-->
+        <!--</div>
+    </div>  
+    <!--END CONTACT SECTION --> 
+    <!--FOOTER SECTION -->
+    <div id="footer">
+        <div class="container">
+            <div class="row ">
+                &copy; 2014 www.yourdomain.com | All Right Reserved 				
+		
+            </div>
+            
+        </div>
+       
+    </div>  
+    <!--END FOOTER SECTION --> 
+    <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+    <!-- CORE JQUERY LIBRARY -->
+    <script src="assets/js/jquery.js"></script>
+    <!-- CORE BOOTSTRAP LIBRARY -->
+    <script src="assets/js/bootstrap.min.js"></script>
+     <!-- SCROLL REVEL LIBRARY FOR SCROLLING ANIMATIONS-->
+    <script src="assets/js/scrollReveal.js"></script>
+       <!-- CUSTOM SCRIPT-->
+    <script src="assets/js/custom.js"></script>
+</body>
 </html>
