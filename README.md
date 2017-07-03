@@ -24,11 +24,13 @@ shaders we added to the scene three point lights: one on the right of the armcha
 
 6.  To justify the presence of the three point lights we modeled three lamps and then place them in the scene, according to light positions. 
 
-7.  We build a very basic GUI to allow the user change material between leather and fabric, and change the color between all possible combinations of RGB.
+7.  We build a very basic GUI to allow the user change material between leather and fabric, and change the color between all possible combinations of RGB. 
+Later we decided to reduce the possible colors to five: red, black, blue, white and light brown, to give the users some ready possibilities and to make the site not seem a three.js demo. 
 
 8.  Since the ambient and directional lights added at point 3 were given an uniform and innatural illumination to the scene, we decided to remove them and render EVERY object using the three point lights in our vertex and fragment shaders. 
 
 9.  We create a special material for each object using the diffuse maps as values for cdiff, so that now is not necessary to set them manually. 
+Not all the textures used for the diffuse maps were founded on-line, so we modified some of them using "photoshop".
    
 10.  We focused on the ambient occlusion: we first create the AO maps with "B2M" and then apply each map to the corresponding object using shaders. 
 
